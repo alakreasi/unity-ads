@@ -97,7 +97,9 @@ abstract class UnityAdsListener {
       onUnityAdsReady(methodCall.arguments);
     } else if (methodCall.method == 'onUnityAdsStart') {
       onUnityAdsStart(methodCall.arguments);
-    }
+    } else {
+			onElse(methodCall.arguments['placementId']);
+		}
   }
 
   void onUnityAdsError(UnityAdsError error, String message);
@@ -107,4 +109,6 @@ abstract class UnityAdsListener {
   void onUnityAdsReady(dynamic placementId);
 
   void onUnityAdsStart(dynamic placementId);
+  
+  void onElse(String placementId);
 }
