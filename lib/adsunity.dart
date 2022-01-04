@@ -23,9 +23,9 @@ enum UnityAdsError {
 class UnityAds {
   static const MethodChannel _channel = const MethodChannel('UnityAds');
 
-  static UnityAdsListener _listener;
+  static UnityAdsListener? _listener;
 
-  static UnityAdsListener getListener() {
+  static UnityAdsListener? getListener() {
     return _listener;
   }
 
@@ -44,30 +44,30 @@ class UnityAds {
       throw new UnsupportedError('Unsupported Platform! Only Android and IOS are supported!');
     }
     _listener = listener;
-    _channel.setMethodCallHandler(_listener._handle);
+    _channel.setMethodCallHandler(_listener!._handle);
     await _channel.invokeMethod('init', {
       'gameId': gameId,
       'testMode': testMode,
     });
   }
 
-  static Future<bool> isInitialized() async {
-    bool initialized = await _channel.invokeMethod('isInitialized');
+  static Future<bool?> isInitialized() async {
+    bool? initialized = await _channel.invokeMethod('isInitialized');
     return initialized;
   }
 
-  static Future<bool> isDefaultReady() async {
-    bool ready = await _channel.invokeMethod('isDefaultReady');
+  static Future<bool?> isDefaultReady() async {
+    bool? ready = await _channel.invokeMethod('isDefaultReady');
     return ready;
   }
 
-  static Future<bool> isReady() async {
-    bool ready = await _channel.invokeMethod('isReady');
+  static Future<bool?> isReady() async {
+    bool? ready = await _channel.invokeMethod('isReady');
     return ready;
   }
 
-  static Future<bool> isSupported() async {
-    bool supported = await _channel.invokeMethod('isSupported');
+  static Future<bool?> isSupported() async {
+    bool? supported = await _channel.invokeMethod('isSupported');
     return supported;
   }
 
@@ -77,7 +77,7 @@ class UnityAds {
 
   static void setListener(UnityAdsListener listener) {
     _listener = listener;
-    _channel.setMethodCallHandler(_listener._handle);
+    _channel.setMethodCallHandler(_listener!._handle);
   }
 
   static Future<Null> show(String placementId) async {
@@ -102,13 +102,13 @@ abstract class UnityAdsListener {
 		}
   }
 
-  void onUnityAdsError(UnityAdsError error, String message);
+  void onUnityAdsError(UnityAdsError error, String? message);
 
-  void onUnityAdsFinish(String placementId, FinishState result);
+  void onUnityAdsFinish(String? placementId, FinishState result);
 
   void onUnityAdsReady(dynamic placementId);
 
   void onUnityAdsStart(dynamic placementId);
   
-  void onElse(String placementId);
+  void onElse(String? placementId);
 }
